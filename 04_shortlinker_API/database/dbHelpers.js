@@ -9,10 +9,14 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 export const fetchUserByEmail = async (table, email) => {
   try {
-    const { data: existingUser,} = await supabase
+    const { data: existingUser, error } = await supabase
       .from(table)
       .select('*')
       .eq('email', email);
+
+    if (error) {
+      throw error
+    }
 
     return existingUser;
   } catch (error) {
@@ -22,10 +26,25 @@ export const fetchUserByEmail = async (table, email) => {
 
 export const insertUser = async (table, userData) => {
     try {
-      await supabase
+      const { error } = await supabase
         .from(table)
         .insert([userData]);
+  
+      if (error) {
+        throw error
+      }
     } catch (error) {
       throw error;
     }
   };
+
+export const insertLink = async (table, linkData) => {
+  try {
+    await supabase
+        .from(table)
+        .insert([linkData]);
+    
+  } catch (error) {
+    throw error
+  }
+}
