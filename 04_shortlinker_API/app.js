@@ -4,6 +4,7 @@ import {createTables} from "./database/createTable.js"
 import meRoute from "./routes/meRoute.js"
 import dotenv from 'dotenv';
 import myLinksRoute from "./routes/myLinksRoute.js";
+import linkRedirectRoute from "./routes/linkRedirectRoute.js";
 
 dotenv.config();
 const port = process.env.PORT;
@@ -19,7 +20,7 @@ app.use('/me', meRoute)
 
 app.use('/mylinks', myLinksRoute)
 
-// app.use("/", linkRedirect)
+app.use("/", linkRedirectRoute)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
